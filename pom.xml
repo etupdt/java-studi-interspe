@@ -121,11 +121,6 @@
 									<arg value="s3://studi-interspe/tomcat/artifact/"/>
 								</exec>
 							</target>-->
-							<target>
-								<exec executable="powershell">
-									<arg value="./pushDockerImage.ps1"/>
-								</exec>
-							</target>
 						</configuration>
           </execution>
        </executions>
