@@ -11,9 +11,9 @@ phases:
 
       - mvn clean package
 
-      - aws s3 cp s3://studi-interspe/tomcat/context.xml ./target
-      - aws s3 cp s3://studi-interspe/tomcat/server.xml ./target
-      - aws s3 cp s3://studi-interspe/tomcat/ssl/studi-keystore.jks ./target
+      - aws s3 cp s3://studi-interspe/tomcat/prod/context.xml ./target
+      - aws s3 cp s3://studi-interspe/tomcat/prod/server.xml ./target
+      - aws s3 cp s3://studi-interspe/tomcat/prod/ssl/studi-keystore.jks ./target
 
       - echo "docker build -t $IMAGE_REPO_NAME:$IMAGE_TAG ."
       - docker build -t $IMAGE_REPO_NAME:$IMAGE_TAG .
