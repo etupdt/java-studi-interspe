@@ -1,0 +1,40 @@
+version: 0.2
+phases:
+  pre_build:
+    commands:
+      - echo pre-Build started on `date`
+      - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
+  build:
+    commands:
+      - echo Build started on `date`
+
+      - mvn clean package
+
+      - aws s3 cp s3://studi-interspe/tomcat/context.xml ./target
+      - aws s3 cp s3://studi-interspe/tomcat/server.xml ./target
+      - aws s3 cp s3://studi-interspe/tomcat/ssl/studi-keystore.jks ./target
+
+      - echo "docker build -t $IMAGE_REPO_NAME:$IMAGE_TAG ."
+      - docker build -t $IMAGE_REPO_NAME:$IMAGE_TAG .
+      
+      - echo "docker tag $IMAGE_REPO_NAME:$IMAGE_TAG $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG"
+      - docker tag $IMAGE_REPO_NAME:$IMAGE_TAG $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
+
+      - echo "docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG"
+      - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
+
+      - echo Build completed on `date`
+  post_build:
+    commands:
+      - echo post-Build started on `date`
+      
+      - ls -lrt
+      - mkdir dist
+      - cp appspec.yml dist/
+      - cp -r scripts dist/
+
+      - echo postBuild completed on `date`
+artifacts:
+  base-directory: dist
+  files:
+    - "**/*"

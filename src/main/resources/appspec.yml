@@ -1,0 +1,20 @@
+version: 0.0
+os: linux
+files:
+  - source: yourbook.war
+    destination: /opt/tomcat/webapps/
+    overwrite: true
+  - source: scripts/starttomcat-aws.sh
+    destination: /tmp
+    overwrite: true
+  - source: scripts/restarttomcat-aws.sh
+    destination: /tmp
+    overwrite: true
+file_exists_behavior: OVERWRITE
+hooks:
+  BeforeInstall:
+    - location: scripts/starttomcat.sh
+      runas: root
+  AfterInstall:
+    - location: scripts/restarttomcat.sh
+      runas: root

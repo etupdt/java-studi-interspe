@@ -1,0 +1,12 @@
+spring:
+  datasource:
+    jndi-name: java:comp/env/jdbc/yourbook
+    driver-class-name: org.mariadb.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    
