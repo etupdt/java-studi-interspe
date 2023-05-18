@@ -83,7 +83,7 @@
 					</excludes>
 				</configuration>
  			</plugin>
-			<plugin>
+<!--			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-assembly-plugin</artifactId>
 				<executions>
@@ -113,18 +113,18 @@
               <goal>run</goal>
             </goals>
 						<configuration>
-<!--							<target>
+							<target>
 								<exec executable="aws">
 									<arg value="s3"/>
 									<arg value="cp"/>
 									<arg value="target/yourbook.zip"/>
 									<arg value="s3://studi-interspe/tomcat/artifact/"/>
 								</exec>
-							</target>-->
+							</target>
 						</configuration>
           </execution>
        </executions>
- 			</plugin>
+ 			</plugin>-->
 		</plugins>
 	</build>
 
